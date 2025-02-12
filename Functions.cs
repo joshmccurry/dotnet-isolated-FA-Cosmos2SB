@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Azure.Messaging.ServiceBus;
 using jm_func_cosmosdb_to_sb.Services;
 using Microsoft.Azure.Functions.Worker;
@@ -18,8 +19,8 @@ namespace jm_func_cosmosdb_to_sb
             _sbService = sbService;
         }
 
-        [Function("Function1")]
-        public void Run([CosmosDBTrigger(
+        [Function("CosmosToServiceBus")]
+        public async Task Run([CosmosDBTrigger(
             databaseName: "databaseName",
             containerName: "containerName",
             Connection = "CosmosConnectionString",
@@ -32,7 +33,7 @@ namespace jm_func_cosmosdb_to_sb
                 _logger.LogInformation("First document Id: " + input[0].id);
             }
             ServiceBusMessage msg = new ServiceBusMessage(input[0].Text);
-            _sbService.SendMessageAsync(msg);
+            await _sbService.SendMessageAsync(msg);
         }
     }
 
