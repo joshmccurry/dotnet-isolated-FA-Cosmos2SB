@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "jm_func_cosmosdb_to_sb": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7088",
+      "launchBrowser": false
+    }
+  }
+}
